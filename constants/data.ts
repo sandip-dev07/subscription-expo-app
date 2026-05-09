@@ -1,5 +1,28 @@
 import { icons } from "./icons";
 
+type RelativeDateOptions = {
+  days?: number;
+  months?: number;
+  years?: number;
+  hour?: number;
+};
+
+const toRelativeIso = ({
+  days = 0,
+  months = 0,
+  years = 0,
+  hour = 9,
+}: RelativeDateOptions) => {
+  const date = new Date();
+
+  date.setUTCHours(hour, 0, 0, 0);
+  date.setUTCFullYear(date.getUTCFullYear() + years);
+  date.setUTCMonth(date.getUTCMonth() + months);
+  date.setUTCDate(date.getUTCDate() + days);
+
+  return date.toISOString();
+};
+
 export const tabs: AppTab[] = [
   { name: "index", title: "Home", icon: icons.home },
   { name: "subscriptions", title: "Subscriptions", icon: icons.wallet },
@@ -13,7 +36,7 @@ export const HOME_USER = {
 
 export const HOME_BALANCE = {
   amount: 2489.48,
-  nextRenewalDate: "2026-03-18T09:00:00.000Z",
+  nextRenewalDate: toRelativeIso({ days: 2, hour: 9 }),
 };
 
 export const UPCOMING_SUBSCRIPTIONS: UpcomingSubscription[] = [
@@ -52,11 +75,11 @@ export const HOME_SUBSCRIPTIONS: Subscription[] = [
     category: "Design",
     paymentMethod: "Visa ending in 8530",
     status: "active",
-    startDate: "2025-03-20T10:00:00.000Z",
+    startDate: toRelativeIso({ months: -14, days: -3, hour: 10 }),
     price: 77.49,
     currency: "USD",
     billing: "Monthly",
-    renewalDate: "2026-03-20T10:00:00.000Z",
+    renewalDate: toRelativeIso({ days: 11, hour: 10 }),
     color: "#f5c542",
   },
   {
@@ -67,11 +90,11 @@ export const HOME_SUBSCRIPTIONS: Subscription[] = [
     category: "Developer Tools",
     paymentMethod: "Mastercard ending in 2408",
     status: "active",
-    startDate: "2024-11-24T10:00:00.000Z",
+    startDate: toRelativeIso({ months: -18, days: -7, hour: 10 }),
     price: 9.99,
     currency: "USD",
     billing: "Monthly",
-    renewalDate: "2026-03-24T10:00:00.000Z",
+    renewalDate: toRelativeIso({ days: 15, hour: 10 }),
     color: "#e8def8",
   },
   {
@@ -82,11 +105,11 @@ export const HOME_SUBSCRIPTIONS: Subscription[] = [
     category: "AI Tools",
     paymentMethod: "Amex ending in 1010",
     status: "paused",
-    startDate: "2025-06-27T10:00:00.000Z",
+    startDate: toRelativeIso({ months: -11, days: -12, hour: 10 }),
     price: 20.0,
     currency: "USD",
     billing: "Monthly",
-    renewalDate: "2026-03-27T10:00:00.000Z",
+    renewalDate: toRelativeIso({ days: 18, hour: 10 }),
     color: "#b8d4e3",
   },
   {
@@ -97,11 +120,11 @@ export const HOME_SUBSCRIPTIONS: Subscription[] = [
     category: "Design",
     paymentMethod: "Visa ending in 7784",
     status: "cancelled",
-    startDate: "2024-04-02T10:00:00.000Z",
+    startDate: toRelativeIso({ years: -2, months: -1, days: -7, hour: 10 }),
     price: 119.99,
     currency: "USD",
     billing: "Yearly",
-    renewalDate: "2026-04-02T10:00:00.000Z",
+    renewalDate: toRelativeIso({ years: 1, months: -1, days: -7, hour: 10 }),
     color: "#b8e8d0",
   },
 ];
